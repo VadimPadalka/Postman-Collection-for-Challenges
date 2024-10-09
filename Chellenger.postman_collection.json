@@ -1,0 +1,3252 @@
+{
+	"info": {
+		"_postman_id": "e8e01dc6-8b1d-46ea-b64d-bfcf1ee330d1",
+		"name": "Chellenger",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36727167"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var token = pm.response.headers.get(\"X-Challenger\")\r",
+							"console.log(token)\r",
+							"pm.environment.set('x-token', token)\r",
+							"pm.test(\"Verify status code\",function() {\r",
+							"    pm.response.to.be.success\r",
+							"})\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/challenger",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"challenger"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "challenges",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function () {",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"    var status_code = pm.response.code",
+							"    pm.expect(status_code).equal(200, \"Status code is differ\")",
+							"})",
+							"pm.test(\"Verify status code\",function() {",
+							"    pm.response.to.be.success",
+							"})",
+							"pm.test(\"Verify status code\", function() {",
+							"    var description = pm.response.json().challenges[0].",
+							"description",
+							"    pm.expect(description).include(\"Issue\", \"wrong text\")",
+							"})",
+							"pm.test(\"Verify status code\", function() {",
+							"    var description = pm.response.json().challenges[0].",
+							"id",
+							"    pm.expect(description).equal(1)",
+							"})",
+							"pm.test(\"Response time is less than 600ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);",
+							"});",
+							"",
+							"",
+							"// Подключаем библиотеку AJV",
+							"const Ajv = require('ajv');",
+							"",
+							"// Создаём экземпляр AJV с включением вывода всех ошибок",
+							"const ajv = new Ajv({ allErrors: true, verbose: true });",
+							"",
+							"// Определяем JSON-схему",
+							"const schema = {",
+							"    \"type\": \"object\",",
+							"    \"properties\": {",
+							"        \"challenges\": {",
+							"            \"type\": \"array\",",
+							"            \"items\": {",
+							"                \"type\": \"object\",",
+							"                \"properties\": {",
+							"                    \"id\": { \"type\": \"integer\" },",
+							"                    \"name\": { \"type\": \"string\" },",
+							"                    \"description\": { \"type\": \"string\" },",
+							"                    \"status\": { \"type\": \"boolean\" }",
+							"                },",
+							"                \"required\": [\"id\", \"name\", \"description\", \"status\"]",
+							"            }",
+							"        }",
+							"    },",
+							"    \"required\": [\"challenges\"]",
+							"};",
+							"",
+							"// Получаем JSON-ответ от API",
+							"const responseData = pm.response.json();",
+							"",
+							"// Выводим полученные данные для отладки",
+							"console.log(\"Полученный ответ:\", responseData);",
+							"",
+							"// Выполняем валидацию JSON-ответа на соответствие схеме",
+							"const valid = ajv.validate(schema, responseData);",
+							"",
+							"// Проверяем, прошла ли валидация",
+							"pm.test(\"JSON соответствует схеме\", function() {",
+							"    pm.expect(valid).to.be.true;",
+							"});",
+							"",
+							"// Если валидация не прошла, выводим ошибки",
+							"if (!valid) {",
+							"    console.log(\"Ошибки валидации:\", ajv.errors);",
+							"}",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/challenges",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"challenges"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "todos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {",
+							"    var status_code = pm.response.code",
+							"    pm.expect(status_code).equal(200, \"Status code is differ\")",
+							"})",
+							"",
+							"// Подключаем библиотеку AJV",
+							"const Ajv = require('ajv');",
+							"",
+							"// Создаём экземпляр AJV с включением вывода всех ошибок",
+							"const ajv = new Ajv({ allErrors: true, verbose: true });",
+							"",
+							"// Определяем JSON-схему для проверки массива `todos`",
+							"const schema = {",
+							"    \"type\": \"object\",",
+							"    \"properties\": {",
+							"        \"todos\": {",
+							"            \"type\": \"array\",",
+							"            \"items\": {",
+							"                \"type\": \"object\",",
+							"                \"properties\": {",
+							"                    \"id\": { \"type\": \"integer\" },",
+							"                    \"title\": { \"type\": \"string\" },",
+							"                    \"doneStatus\": { \"type\": \"boolean\" },",
+							"                    \"description\": { \"type\": \"string\" }",
+							"                },",
+							"                \"required\": [\"id\", \"title\", \"doneStatus\", \"description\"]",
+							"            }",
+							"        }",
+							"    },",
+							"    \"required\": [\"todos\"]",
+							"};",
+							"",
+							"// Получаем JSON-ответ от API",
+							"const responseData = pm.response.json();",
+							"",
+							"// Выводим полученные данные для отладки",
+							"console.log(\"Полученный ответ:\", responseData);",
+							"",
+							"// Выполняем валидацию JSON-ответа на соответствие схеме",
+							"const valid = ajv.validate(schema, responseData);",
+							"",
+							"// Проверяем, прошла ли валидация",
+							"pm.test(\"JSON соответствует схеме\", function() {",
+							"    pm.expect(valid).to.be.true;",
+							"});",
+							"",
+							"// Если валидация не прошла, выводим ошибки",
+							"if (!valid) {",
+							"    console.log(\"Ошибки валидации:\", ajv.errors);",
+							"}",
+							"",
+							"pm.test(\"Response time is less than 600ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "todo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {",
+							"    var status_code = pm.response.code",
+							"    pm.expect(status_code).equal(404, \"Status code is differ\")",
+							"})",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/todo",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "todos id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {",
+							"    var status_code = pm.response.code",
+							"    pm.expect(status_code).equal(200, \"Status code is differ\")",
+							"})",
+							"",
+							"// Подключаем библиотеку AJV",
+							"const Ajv = require('ajv');",
+							"",
+							"// Создаём экземпляр AJV с включением вывода всех ошибок",
+							"const ajv = new Ajv({ allErrors: true, verbose: true });",
+							"",
+							"// Определяем JSON-схему для проверки массива `todos`",
+							"const schema = {",
+							"    \"type\": \"object\",",
+							"    \"properties\": {",
+							"        \"todos\": {",
+							"            \"type\": \"array\",",
+							"            \"items\": {",
+							"                \"type\": \"object\",",
+							"                \"properties\": {",
+							"                    \"id\": { \"type\": \"integer\" },",
+							"                    \"title\": { \"type\": \"string\" },",
+							"                    \"doneStatus\": { \"type\": \"boolean\" },",
+							"                    \"description\": { \"type\": \"string\" }",
+							"                },",
+							"                \"required\": [\"id\", \"title\", \"doneStatus\", \"description\"]",
+							"            }",
+							"        }",
+							"    },",
+							"    \"required\": [\"todos\"]",
+							"};",
+							"",
+							"// Получаем JSON-ответ от API",
+							"const responseData = pm.response.json();",
+							"",
+							"// Выводим полученные данные для отладки",
+							"console.log(\"Полученный ответ:\", responseData);",
+							"",
+							"// Выполняем валидацию JSON-ответа на соответствие схеме",
+							"const valid = ajv.validate(schema, responseData);",
+							"",
+							"// Проверяем, прошла ли валидация",
+							"pm.test(\"JSON соответствует схеме\", function() {",
+							"    pm.expect(valid).to.be.true;",
+							"});",
+							"",
+							"// Если валидация не прошла, выводим ошибки",
+							"if (!valid) {",
+							"    console.log(\"Ошибки валидации:\", ajv.errors);",
+							"}",
+							"",
+							"pm.test(\"Response time is less than 600ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/todos/7",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "todos incorrect id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {",
+							"    var status_code = pm.response.code",
+							"    pm.expect(status_code).equal(404, \"Status code is differ\")",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/todos/8909876",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos",
+						"8909876"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "todos_filter_true",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(200, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"// Подключаем библиотеку AJV\r",
+							"const Ajv = require('ajv');\r",
+							"\r",
+							"// Создаём экземпляр AJV с включением вывода всех ошибок\r",
+							"const ajv = new Ajv({ allErrors: true, verbose: true });\r",
+							"\r",
+							"// Определяем JSON-схему для проверки массива `todos`\r",
+							"const schema = {\r",
+							"    \"type\": \"object\",\r",
+							"    \"properties\": {\r",
+							"        \"todos\": {\r",
+							"            \"type\": \"array\",\r",
+							"            \"items\": {\r",
+							"                \"type\": \"object\",\r",
+							"                \"properties\": {\r",
+							"                    \"id\": { \"type\": \"integer\" },\r",
+							"                    \"title\": { \"type\": \"string\" },\r",
+							"                    \"doneStatus\": { \"type\": \"boolean\" },\r",
+							"                    \"description\": { \"type\": \"string\" }\r",
+							"                },\r",
+							"                \"required\": [\"id\", \"title\", \"doneStatus\", \"description\"]\r",
+							"            }\r",
+							"        }\r",
+							"    },\r",
+							"    \"required\": [\"todos\"]\r",
+							"};\r",
+							"\r",
+							"// Получаем JSON-ответ от API\r",
+							"const responseData = pm.response.json();\r",
+							"\r",
+							"// Выводим полученные данные для отладки\r",
+							"console.log(\"Полученный ответ:\", responseData);\r",
+							"\r",
+							"// Выполняем валидацию JSON-ответа на соответствие схеме\r",
+							"const valid = ajv.validate(schema, responseData);\r",
+							"\r",
+							"// Проверяем, прошла ли валидация\r",
+							"pm.test(\"JSON соответствует схеме\", function() {\r",
+							"    pm.expect(valid).to.be.true;\r",
+							"});\r",
+							"\r",
+							"// Если валидация не прошла, выводим ошибки\r",
+							"if (!valid) {\r",
+							"    console.log(\"Ошибки валидации:\", ajv.errors);\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/todos?doneStatus=true",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					],
+					"query": [
+						{
+							"key": "doneStatus",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "todos Head",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "HEAD",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new todo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(201, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n            \"title\": \"sttygfgh\",\n            \"doneStatus\": true,\n            \"description\": \"ty345\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10_doneStatus_filed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(400, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n            \"title\": \"train staff2\",\n            \"doneStatus\": true1,\n            \"description\": \"6787665\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11_title_fail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(400, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n            \"title\": \"qwertyuiopqwertyuioplkjhgfdsaqqwertyuioplkjhgfdsazxcvgfdrews\",\n            \"doneStatus\": true,\n            \"description\": \"67\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12_description fail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(400, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n            \"title\": \"train staff7\",\n            \"doneStatus\": true,\n            \"description\": \"123456789009876543211111112345678901234567890123456789012345678901234567890098765432112345678901234567890123456789009876543211234567890098765555566666666661234444444444444444444444444444444444444444444444456789098765432123456789098765456\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "13_maximum title and description",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(201, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n            \"title\": \"sssghfgkf hgfhgkfhgkf gfhgdfkghdfjkghf hgdfjkjghdf\",\n            \"doneStatus\": true,\n            \"description\": \"sssghfgkf hgfhgkfhgkf gfhgdfkghdfjkghf hgdfjkjghdfghdfgdfhgjkdfhg hgkfdghdfhgjkfd hgdfjghdfjkghdfhgjkjdf hjfhgkfhgj hjfghfjhgjdf hjkfghfjhgjkdfhgkjfdhgjkdfhgjkdfhgjkdfhgjkfghfgghfh hjhgjkfhgjkdhhhhhhh\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "14_maximum descrition bytes > 5000",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(413, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n            \"title\": \"train staff45\",\n            \"doneStatus\": true,\n            \"description\": \"Prince. Rebellious subjects, enemies to peace,\n    Profaners of this neighbour-stained steel-\n    Cast by their grave beseeming ornaments\n    To wield old partisans, in hands as old,\n    Cank'red with peace, to part your cank'red hate.\n    If ever you disturb our streets again,\n    Your lives shall pay the forfeit of the peace.\n    For this time all the rest depart away.\n    You, Capulet, shall go along with me;\n    And, Montague, come you this afternoon,\n    To know our farther pleasure in this case,\n    To old Freetown, our common judgment place.\n    Once more, on pain of death, all men depart.\nCast by their grave beseeming ornaments\n    To wield old partisans, in hands as old,\n    Cank'red with peace, to part your cank'red hate.\n    If ever you disturb our streets again,\n    Your lives shall pay the forfeit of the peace.\n    For this time all the rest depart away.\n    You, Capulet, shall go along with me;\n    And, Montague, come you this afternoon,\n    To know our farther pleasure in this case,\n    To old Freetown, our common judgment place.\n    Once more, on pain of death, all men depart.\nCast by their grave beseeming ornaments\n    To wield old partisans, in hands as old,\n    Cank'red with peace, to part your cank'red hate.\n    If ever you disturb our streets again,\n    Your lives shall pay the forfeit of the peace.\n    For this time all the rest depart away.\n    You, Capulet, shall go along with me;\n    And, Montague, come you this afternoon,\n    To know our farther pleasure in this case,\n    To old Freetown, our common judgment place.\n    Once more, on pain of death, all men depart.\nCast by their grave beseeming ornaments\n    To wield old partisans, in hands as old,\n    Cank'red with peace, to part your cank'red hate.\n    If ever you disturb our streets again,\n    Your lives shall pay the forfeit of the peace.\n    For this time all the rest depart away.\n    You, Capulet, shall go along with me;\n    And, Montague, come you this afternoon,\n    To know our farther pleasure in this case,\n    To old Freetown, our common judgment place.\n    Once more, on pain of death, all men depart.\nCast by their grave beseeming ornaments\n    To wield old partisans, in hands as old,\n    Cank'red with peace, to part your cank'red hate.\n    If ever you disturb our streets again,\n    Your lives shall pay the forfeit of the peace.\n    For this time all the rest depart away.\n    You, Capulet, shall go along with me;\n    And, Montague, come you this afternoon,\n    To know our farther pleasure in this case,\n    To old Freetown, our common judgment place.\n    Once more, on pain of death, all men depart.\nCast by their grave beseeming ornaments\n    To wield old partisans, in hands as old,\n    Cank'red with peace, to part your cank'red hate.\n    If ever you disturb our streets again,\n    Your lives shall pay the forfeit of the peace.\n    For this time all the rest depart away.\n    You, Capulet, shall go along with me;\n    And, Montague, come you this afternoon,\n    To know our farther pleasure in this case,\n    To old Freetown, our common judgment place.\n    Once more, on pain of death, all men depart.\nCast by their grave beseeming ornaments\n    To wield old partisans, in hands as old,\n    Cank'red with peace, to part your cank'red hate.\n    If ever you disturb our streets again,\n    Your lives shall pay the forfeit of the peace.\n    For this time all the rest depart away.\n    You, Capulet, shall go along with me;\n    And, Montague, come you this afternoon,\n    To know our farther pleasure in this case,\n    To old Freetown, our common judgment place.\n    Once more, on pain of death, all men depart.\nCast by their grave beseeming ornaments\n    To wield old partisans, in hands as old,\n    Cank'red with peace, to part your cank'red hate.\n    If ever you disturb our streets again,\n    Your lives shall pay the forfeit of the peace.\n    For this time all the rest depart away.\n    You, Capulet, shall go along with me;\n    And, Montague, come you this afternoon,\n    To know our farther pleasure in this case,\n    To old Freetown, our common judgment place.\n    Once more, on pain of death, all men depart.\nCast by their grave beseeming ornaments\n    To wield old partisans, in hands as old,\n    Cank'red with peace, to part your cank'red hate.\n    If ever you disturb our streets again,\n    Your lives shall pay the forfeit of the peace.\n    For this time all the rest depart away.\n    You, Capulet, shall go along with me;\n    And, Montague, come you this afternoon,\n    To know our farther pleasure in this case,\n    To old Freetown, our common judgment place.\n    Once more, on pain of death, all men depart.\nCast by their grave beseeming ornaments\n    To wield old partisans, in hands as old,\n    Cank'red with peace, to part your cank'red hate.\n    If ever you disturb our streets again,\n    Your lives shall pay the forfeit of the peace.\n    For this time all the rest depart away.\n    You, Capulet, shall go along with me;\n    And, Montague, come you this afternoon,\n    To know our farther pleasure in this case,\n    To old Freetown, our common judgment place.\n    Once more, on pain of death, all men depart.\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "15_an unrecognized field",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(400, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n            \"title\": \"Hasky djon1\",\n            \"doneStatus\": true,\n            \"description\": \"67jjj\",\n            \"priority\":\"midl\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "16_create new todo (PUT400)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(400, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n            \"title\": \"train staff1\",\n            \"doneStatus\": true,\n            \"description\": \"67\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos/678",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos",
+						"678"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "17_update a todo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(200, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n            \"title\": \"train staff\",\n            \"doneStatus\": true,\n            \"description\": \"\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos/9",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "18_update a todo not exist id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(404, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n            \"title\": \"train staff\",\n            \"doneStatus\": false,\n            \"description\": \"\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos/987",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos",
+						"987"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "19_full_update(title,donStatus,description)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(200, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"id\": 3,\n            \"title\": \"process payments1\",\n            \"doneStatus\": true,\n            \"description\": \"error\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos/3",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "20_partial_update(title)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(200, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n    \"title\": \"staff\"\n\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos/3",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "21_No title",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(400, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"id\": 4,\n        \"doneStatus\": false,\n        \"description\": \"\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos/3",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "22_No amend id (изменения id в ручную)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(400, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"id\": 43,\n            \"title\": \"staff\",\n            \"doneStatus\": false,\n            \"description\": \"\"\n        },",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos/3",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "23_DELET/todos(id)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(200, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/todos/4",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "24_OPTIONS_todos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(200, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "OPTIONS",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "25_todos_XML (получаем данные в XML )",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(200, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/xml",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "26_todos_Json (получаем данные в Json )",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(200, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "27_todos_ANY",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(200, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "28_todos_XML and Json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(200, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/xml, application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "29_No accept",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(200, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/xml",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "30_application/gzip(406)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(406, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/gzip",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "31_POST_todos_XML",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(201, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/xml",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<todo>\n        <doneStatus>true</doneStatus>\n        <description>667</description>\n        <title>train staff68</title>\n    </todo>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "32_POST_todos_Json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(201, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n            \"title\": \"Bulya\",\n            \"doneStatus\": true,\n            \"description\": \"123445\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "33_POST_todos_ неподдерживаемый формат данных (415)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(415, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n            \"title\": \"Bulya\",\n            \"doneStatus\": true,\n            \"description\": \"123445\"\n        }",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "34_save progress",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/challenger/{{x-token}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"challenger",
+						"{{x-token}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "35_RESTORE",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"xAuthToken\": \"745a2576-0d3c-4248-a577-7b440251ff9c\",\n    \"xChallenger\": \"6f9c7076-5b3e-4e58-8b01-a55ec3d7a3dc\",\n    \"secretNote\": \"\",\n    \"challengeStatus\": {\n        \"OVERRIDE_TRACE_HEARTBEAT_501\": false,\n        \"GET_ACCEPT_XML_PREFERRED\": true,\n        \"GET_SECRET_NOTE_BEARER_200\": false,\n        \"DELETE_HEARTBEAT_405\": false,\n        \"GET_ACCEPT_ANY_DEFAULT_JSON\": true,\n        \"PUT_TODOS_FULL_200\": true,\n        \"POST_TODOS_TOO_LONG_DESCRIPTION_LENGTH\": true,\n        \"PUT_TODOS_MISSING_TITLE_400\": true,\n        \"CREATE_SECRET_TOKEN_401\": false,\n        \"POST_TODOS_415\": true,\n        \"POST_SECRET_NOTE_403\": false,\n        \"TRACE_HEARTBEAT_501\": false,\n        \"POST_ALL_TODOS\": false,\n        \"GET_JSON_BY_DEFAULT_NO_ACCEPT\": true,\n        \"CREATE_NEW_CHALLENGER\": true,\n        \"PUT_NEW_RESTORED_CHALLENGER_PROGRESS_STATUS\": false,\n        \"PATCH_HEARTBEAT_500\": false,\n        \"GET_ACCEPT_JSON\": true,\n        \"OVERRIDE_PATCH_HEARTBEAT_500\": false,\n        \"GET_SECRET_NOTE_200\": false,\n        \"GET_TODOS\": true,\n        \"GET_HEARTBEAT_204\": false,\n        \"CREATE_SECRET_TOKEN_201\": false,\n        \"GET_ACCEPT_XML\": true,\n        \"PUT_RESTORABLE_TODOS\": false,\n        \"GET_SECRET_NOTE_401\": false,\n        \"GET_TODOS_NOT_PLURAL_404\": true,\n        \"OVERRIDE_DELETE_HEARTBEAT_405\": false,\n        \"GET_RESTORABLE_CHALLENGER_PROGRESS_STATUS\": true,\n        \"POST_CREATE_XML_ACCEPT_JSON\": false,\n        \"POST_SECRET_NOTE_BEARER_200\": false,\n        \"PUT_TODOS_400\": true,\n        \"OPTIONS_TODOS\": true,\n        \"POST_TODOS_BAD_DONE_STATUS\": true,\n        \"POST_TODOS_TOO_LONG_PAYLOAD_SIZE\": true,\n        \"PUT_TODOS_400_NO_AMEND_ID\": false,\n        \"POST_SECRET_NOTE_401\": false,\n        \"POST_MAX_OUT_TITLE_DESCRIPTION_LENGTH\": true,\n        \"GET_RESTORABLE_TODOS\": false,\n        \"POST_TODOS_INVALID_EXTRA_FIELD\": true,\n        \"GET_TODOS_FILTERED\": false,\n        \"DELETE_ALL_TODOS\": false,\n        \"POST_SECRET_NOTE_200\": false,\n        \"GET_UNSUPPORTED_ACCEPT_406\": true,\n        \"POST_CREATE_XML\": true,\n        \"GET_CHALLENGES\": true,\n        \"POST_UPDATE_TODO\": true,\n        \"POST_CREATE_JSON_ACCEPT_XML\": false,\n        \"PUT_RESTORABLE_CHALLENGER_PROGRESS_STATUS\": false,\n        \"DELETE_A_TODO\": true,\n        \"GET_HEAD_TODOS\": true,\n        \"GET_TODO_404\": true,\n        \"POST_CREATE_JSON\": true,\n        \"GET_SECRET_NOTE_403\": false,\n        \"GET_TODO\": true,\n        \"PUT_TODOS_PARTIAL_200\": true,\n        \"POST_TODOS_TOO_LONG_TITLE_LENGTH\": true,\n        \"POST_TODOS_404\": true,\n        \"POST_TODOS\": true\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/challenger/{{x-token}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"challenger",
+						"{{x-token}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "36_CREATE",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"xAuthToken\": \"745a2576-0d3c-4248-a577-7b440251ff9c\",\n    \"xChallenger\": \"6f9c7076-5b3e-4e58-8b01-a55ec3d7a3dc\",\n    \"secretNote\": \"\",\n    \"challengeStatus\": {\n        \"OVERRIDE_TRACE_HEARTBEAT_501\": false,\n        \"GET_ACCEPT_XML_PREFERRED\": true,\n        \"GET_SECRET_NOTE_BEARER_200\": false,\n        \"DELETE_HEARTBEAT_405\": false,\n        \"GET_ACCEPT_ANY_DEFAULT_JSON\": true,\n        \"PUT_TODOS_FULL_200\": true,\n        \"POST_TODOS_TOO_LONG_DESCRIPTION_LENGTH\": true,\n        \"PUT_TODOS_MISSING_TITLE_400\": true,\n        \"CREATE_SECRET_TOKEN_401\": false,\n        \"POST_TODOS_415\": true,\n        \"POST_SECRET_NOTE_403\": false,\n        \"TRACE_HEARTBEAT_501\": false,\n        \"POST_ALL_TODOS\": false,\n        \"GET_JSON_BY_DEFAULT_NO_ACCEPT\": true,\n        \"CREATE_NEW_CHALLENGER\": true,\n        \"PUT_NEW_RESTORED_CHALLENGER_PROGRESS_STATUS\": false,\n        \"PATCH_HEARTBEAT_500\": false,\n        \"GET_ACCEPT_JSON\": true,\n        \"OVERRIDE_PATCH_HEARTBEAT_500\": false,\n        \"GET_SECRET_NOTE_200\": false,\n        \"GET_TODOS\": true,\n        \"GET_HEARTBEAT_204\": false,\n        \"CREATE_SECRET_TOKEN_201\": false,\n        \"GET_ACCEPT_XML\": true,\n        \"PUT_RESTORABLE_TODOS\": false,\n        \"GET_SECRET_NOTE_401\": false,\n        \"GET_TODOS_NOT_PLURAL_404\": true,\n        \"OVERRIDE_DELETE_HEARTBEAT_405\": false,\n        \"GET_RESTORABLE_CHALLENGER_PROGRESS_STATUS\": true,\n        \"POST_CREATE_XML_ACCEPT_JSON\": false,\n        \"POST_SECRET_NOTE_BEARER_200\": false,\n        \"PUT_TODOS_400\": true,\n        \"OPTIONS_TODOS\": true,\n        \"POST_TODOS_BAD_DONE_STATUS\": true,\n        \"POST_TODOS_TOO_LONG_PAYLOAD_SIZE\": true,\n        \"PUT_TODOS_400_NO_AMEND_ID\": false,\n        \"POST_SECRET_NOTE_401\": false,\n        \"POST_MAX_OUT_TITLE_DESCRIPTION_LENGTH\": true,\n        \"GET_RESTORABLE_TODOS\": false,\n        \"POST_TODOS_INVALID_EXTRA_FIELD\": true,\n        \"GET_TODOS_FILTERED\": false,\n        \"DELETE_ALL_TODOS\": false,\n        \"POST_SECRET_NOTE_200\": false,\n        \"GET_UNSUPPORTED_ACCEPT_406\": true,\n        \"POST_CREATE_XML\": true,\n        \"GET_CHALLENGES\": true,\n        \"POST_UPDATE_TODO\": true,\n        \"POST_CREATE_JSON_ACCEPT_XML\": false,\n        \"PUT_RESTORABLE_CHALLENGER_PROGRESS_STATUS\": false,\n        \"DELETE_A_TODO\": true,\n        \"GET_HEAD_TODOS\": true,\n        \"GET_TODO_404\": true,\n        \"POST_CREATE_JSON\": true,\n        \"GET_SECRET_NOTE_403\": false,\n        \"GET_TODO\": true,\n        \"PUT_TODOS_PARTIAL_200\": true,\n        \"POST_TODOS_TOO_LONG_TITLE_LENGTH\": true,\n        \"POST_TODOS_404\": true,\n        \"POST_TODOS\": true\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/challenger/{{x-token}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"challenger",
+						"{{x-token}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "37_database_GUID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(200, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/challenger/database/{{x-token}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"challenger",
+						"database",
+						"{{x-token}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "38_Update_database",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"todos\": [\n        {\n            \"id\": 5,\n            \"title\": \"pay invoices\"\n        },\n        {\n            \"id\": 9,\n            \"title\": \"train staff\",\n            \"doneStatus\": true,\n            \"description\": \"\"\n        },\n        {\n            \"id\": 11,\n            \"title\": \"train staff1\",\n            \"doneStatus\": true,\n            \"description\": \"67\"\n        },\n        {\n            \"id\": 2,\n            \"title\": \"file paperwork\"\n        },\n        {\n            \"id\": 10,\n            \"title\": \"install webcam\"\n        },\n        {\n            \"id\": 8,\n            \"title\": \"schedule meeting\"\n        },\n        {\n            \"id\": 17,\n            \"title\": \"train staff68\",\n            \"doneStatus\": true,\n            \"description\": \"67.0\"\n        },\n        {\n            \"id\": 15,\n            \"title\": \"sssghfgkf hgfhgkfhgkf gfhgdfkghdfjkghf hgdfjkjghdf\",\n            \"doneStatus\": true,\n            \"description\": \"sssghfgkf hgfhgkfhgkf gfhgdfkghdfjkghf hgdfjkjghdfghdfgdfhgjkdfhg hgkfdghdfhgjkfd hgdfjghdfjkghdfhgjkjdf hjfhgkfhgj hjfghfjhgjdf hjkfghfjhgjkdfhgkjfdhgjkdfhgjkdfhgjkdfhgjkfghfgghfh hjhgjkfhgjkdhhhhhhh\"\n        },\n        {\n            \"id\": 3,\n            \"title\": \"process payments\"\n        },\n        {\n            \"id\": 18,\n            \"title\": \"Bulya\",\n            \"doneStatus\": true,\n            \"description\": \"123445\"\n        },\n        {\n            \"id\": 7,\n            \"title\": \"train staff\"\n        },\n        {\n            \"id\": 6,\n            \"title\": \"process payroll\"\n        },\n        {\n            \"id\": 40,\n            \"title\": \"scan paperwork\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/challenger/database/{{x-token}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"challenger",
+						"database",
+						"{{x-token}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "39_создание в xml получение ответа в json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(201, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<todo>\n        <doneStatus>true</doneStatus>\n        <description/>\n        <title>file day</title>\n    </todo>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "40_создание в json получение ответа в xml",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(201, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/xml",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"day_1\",\n    \"doneStatus\": true,\n    \"description\": \"kreyzy\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "41_DELETE_heartbeat(405)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(405, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/heartbeat",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"heartbeat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "42_PATCH_heartdeat(500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(500, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/heartbeat",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"heartbeat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "43_TRACE_heartdeat(501)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(501, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "TRACE",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/heartbeat",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"heartbeat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "44_GET_heartdeat(204)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(204, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/heartbeat",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"heartbeat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "45_POST_heartdeat as DELETE (405)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(405, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-HTTP-Method-Override",
+						"value": "DELETE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n            \"title\": \"day_2\",\n            \"doneStatus\": true,\n            \"description\": \"kreyzy2\"\n        },",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/heartbeat",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"heartbeat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "46_POST_heartdeat as PATCH (500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(500, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-HTTP-Method-Override",
+						"value": "PATCH",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/heartbeat",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"heartbeat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "47_Trace_heartdeat as TRACE (501)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(501, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-HTTP-Method-Override",
+						"value": "TRACE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n            \"title\": \"day_56\",\n            \"doneStatus\": true,\n            \"description\": \"kreyzy\"\n        },",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/heartbeat",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"heartbeat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "48_secret_token(401)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(401, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Pa55word",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "Admin1",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-HTTP-Method-Override",
+						"value": "TRACE",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url}}/secret/token",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"secret",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "49_secret_token_Valyd(201)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Получаем значение заголовка \"X-Auth-Token\" из ответа\r",
+							"var authToken = pm.response.headers.get(\"X-Auth-Token\");\r",
+							"console.log(\"Полученный X-Auth-Token токен:\", authToken);\r",
+							"\r",
+							"// Если токен \"X-Auth-Token\" существует, то добавляем его в окружение\r",
+							"if (authToken) {\r",
+							"    pm.environment.set('X-Auth-Token', authToken);\r",
+							"} else {\r",
+							"    console.log(\"Заголовок X-Auth-Token не найден в ответе\");\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(201, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-HTTP-Method-Override",
+						"value": "TRACE",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url}}/secret/token",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"secret",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "50_secret_note_X_AUTH_TOKEN(403) (ключь не правильный)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(403, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-HTTP-Method-Override",
+						"value": "TRACE",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "67ghj",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/secret/note",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"secret",
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "51_secret_note_X_AUTH_TOKEN(401) (ключь отсутствует)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(401, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-HTTP-Method-Override",
+						"value": "TRACE",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "{{X-Auth-Token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url}}/secret/note",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"secret",
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "52_secret_note_X_AUTH_TOKEN(200)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(200, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-HTTP-Method-Override",
+						"value": "TRACE",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "{{X-Auth-Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/secret/note",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"secret",
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "53_secret_note_CREATE_NOTE(200)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(200, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-HTTP-Method-Override",
+						"value": "TRACE",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "{{X-Auth-Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"note\": \"my note\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/secret/note",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"secret",
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "54_secret_note_CREATE_NOTE(401) ключь отсутствывает",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(401, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-HTTP-Method-Override",
+						"value": "TRACE",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"note\": \"my note\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/secret/note",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"secret",
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "55_secret_note_CREATE_NOTE(403) error key",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(403, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-HTTP-Method-Override",
+						"value": "TRACE",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "0cb72787-2e99-4a6f-b228-98fc522334kj",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"note\": \"my note45\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/secret/note",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"secret",
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "56_secret_note_X_AUTH_TOKEN(200) Bearer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(200, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{X-Auth-Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-HTTP-Method-Override",
+						"value": "TRACE",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "0cb72787-2e99-4a6f-b228-98fc522334be",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url}}/secret/note",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"secret",
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "57_secret_note_X_AUTH_TOKEN(200) Bearer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code\", function() {\r",
+							"    var status_code = pm.response.code\r",
+							"    pm.expect(status_code).equal(200, \"Status code is differ\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{X-Auth-Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-HTTP-Method-Override",
+						"value": "TRACE",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "0cb72787-2e99-4a6f-b228-98fc522334be",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"note\": \"my note and note vadim\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/secret/note",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"secret",
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "58_DELET/todos(id) all",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/todos/8",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "59-create new todo MAX_POST",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-Challenger",
+						"value": "{{x-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n            \"title\": \"train staff1\",\n            \"doneStatus\": true,\n            \"description\": \"67\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/todos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
